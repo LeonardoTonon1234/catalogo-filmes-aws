@@ -214,7 +214,7 @@ footer p {
       <input id="titulo" type="text" placeholder="Título" required />
       <input id="diretor" type="text" placeholder="Diretor" required />
       <input id="genero" type="text" placeholder="Gênero" required />
-      <input id="ano" type="number" placeholder="Ano" required />
+      <input id="anoLancamento" type="number" placeholder="Ano" required />
       <input id="avaliacao" type="number" step="0.1" placeholder="Avaliação" required />
       <div class="modal-buttons">
         <button class="btn-cancel" id="closeModal">Cancelar</button>
@@ -239,13 +239,13 @@ footer p {
           const card = document.createElement("div");
           card.className = "card";
           card.innerHTML = `
-            <div class="avatar">${f.titulo.charAt(0).toUpperCase()}</div>
+            <div class="avatar">${f.titulo?.charAt(0).toUpperCase() || "-"}</div>
             <div class="detalhes">
-              <strong>${f.titulo}</strong>
-              <span>${f.diretor || ""}</span><br>
+              <strong>${f.titulo || "Sem título"}</strong>
+              <span>${f.diretor || "Diretor desconhecido"}</span><br>
               <small>
-                Gênero: ${f.genero || "-"} &nbsp;&nbsp; 
-                Ano: ${f.ano !== undefined && f.ano !== null ? f.ano : (f.anoLancamento || "-")} &nbsp;&nbsp; 
+                Gênero: ${f.genero || "-"} &nbsp;&nbsp;
+                Ano: ${f.anoLancamento || "-"} &nbsp;&nbsp;
                 Avaliação: ${f.avaliacao || "-"}
               </small>
             </div>
@@ -269,12 +269,23 @@ footer p {
     };
 
     saveFilme.onclick = async () => {
+      const titulo = document.getElementById("titulo").value.trim();
+      const diretor = document.getElementById("diretor").value.trim();
+      const genero = document.getElementById("genero").value.trim();
+      const anoLancamento = document.getElementById("anoLancamento").value.trim();
+      const avaliacao = document.getElementById("avaliacao").value.trim();
+
+      if (!titulo || !diretor || !genero || !anoLancamento || !avaliacao) {
+        alert("Por favor, preencha todos os campos antes de salvar!");
+        return;
+      }
+
       const filme = {
-        titulo: document.getElementById("titulo").value,
-        diretor: document.getElementById("diretor").value,
-        genero: document.getElementById("genero").value,
-        ano: parseInt(document.getElementById("ano").value),
-        avaliacao: parseFloat(document.getElementById("avaliacao").value),
+        titulo,
+        diretor,
+        genero,
+        anoLancamento: parseInt(anoLancamento),
+        avaliacao: parseFloat(avaliacao)
       };
 
       try {

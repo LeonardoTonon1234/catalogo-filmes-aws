@@ -326,13 +326,14 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
       });
     }
 
+    // ✅ AGORA ACEITA FILMES COM MÚLTIPLOS GÊNEROS
     function filtrarFilmes() {
       const termo = searchInput.value.trim().toLowerCase();
       const genero = genreSelect.value.trim().toLowerCase();
 
       const filtrados = filmesCache.filter(f =>
         (termo === "" || f.titulo.toLowerCase().includes(termo)) &&
-        (genero === "" || f.genero.toLowerCase() === genero)
+        (genero === "" || f.genero.toLowerCase().includes(genero))
       );
 
       renderizarFilmes(filtrados);

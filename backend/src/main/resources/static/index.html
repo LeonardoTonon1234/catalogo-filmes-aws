@@ -28,21 +28,54 @@ body {
 header {
   background: var(--vermelho);
   color: #fff;
-  padding: 16px 24px;
+  padding: 12px 24px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-header h1 { margin: 0; font-size: 20px; }
+header h1 {
+  font-size: 18px;
+  margin: 0;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#searchInput {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.btn-search, .btn-clear {
+  background: #fff;
+  color: var(--vermelho);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-clear { background: #f4f4f4; color: #555; }
+.btn-clear:hover { background: #e2e2e2; }
+.btn-search:hover { background: #f4f4f4; }
 
 .btn-add {
   background: #fff;
   color: var(--vermelho);
   border: none;
   border-radius: 6px;
-  padding: 10px 16px;
+  padding: 8px 12px;
   cursor: pointer;
   font-weight: 600;
 }
@@ -157,7 +190,6 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
   border-radius: 6px;
 }
 
-/* Remove setas do campo numérico */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -204,7 +236,12 @@ input[type=number] { -moz-appearance: textfield; }
 <body>
   <header>
     <h1>Catálogo de Filmes - Mackenzie Edition</h1>
-    <button class="btn-add" id="openModal">Adicionar Filme</button>
+    <div class="header-right">
+      <input id="searchInput" type="text" placeholder="Buscar por nome ou gênero..." />
+      <button class="btn-search" id="searchBtn">Buscar</button>
+      <button class="btn-clear" id="clearSearch">Limpar</button>
+      <button class="btn-add" id="openModal">Adicionar Filme</button>
+    </div>
   </header>
 
   <main>
@@ -240,58 +277,71 @@ input[type=number] { -moz-appearance: textfield; }
   <script>
     const filmesEl = document.getElementById("filmes");
     const statusEl = document.getElementById("status");
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const clearSearch = document.getElementById("clearSearch");
     const modal = document.getElementById("modal");
     const openModal = document.getElementById("openModal");
     const closeModal = document.getElementById("closeModal");
     const saveFilme = document.getElementById("saveFilme");
     const clearFields = document.getElementById("clearFields");
     const modalTitulo = document.getElementById("modalTitulo");
-
     let editandoId = null;
+    let filmesCache = [];
 
     async function carregarFilmes() {
       try {
         const res = await fetch("/filmes");
-        const filmes = await res.json();
-
-        statusEl.textContent = `Foram encontrados ${filmes.length} filme(s).`;
-        filmesEl.innerHTML = "";
-
-        filmes.forEach((f) => {
-          const card = document.createElement("div");
-          card.className = "card";
-          card.innerHTML = `
-            <div class="avatar">${f.titulo?.charAt(0).toUpperCase() || "-"}</div>
-            <div class="detalhes">
-              <strong>${f.titulo}</strong>
-              <span>${f.diretor}</span><br>
-              <small>Gênero: ${f.genero} &nbsp;&nbsp; Ano: ${f.anoLancamento} &nbsp;&nbsp; Avaliação: ${f.avaliacao}</small>
-            </div>
-            <div class="acoes">
-              <button class="btn-acao btn-editar" onclick="editarFilme(${f.id})">Editar</button>
-              <button class="btn-acao btn-excluir" onclick="deletarFilme(${f.id})">Excluir</button>
-            </div>
-          `;
-          filmesEl.appendChild(card);
-        });
-        return filmes;
-      } catch (error) {
+        filmesCache = await res.json();
+        renderizarFilmes(filmesCache);
+      } catch {
         statusEl.textContent = "Erro ao carregar filmes.";
-        return [];
       }
     }
 
-    openModal.onclick = () => {
-      modal.style.display = "flex";
-      modalTitulo.textContent = "Adicionar Novo Filme";
-      editandoId = null;
-      clearCampos();
-    };
+    function renderizarFilmes(filmes) {
+      filmesEl.innerHTML = "";
+      if (filmes.length === 0) {
+        statusEl.textContent = "Nenhum filme encontrado.";
+        return;
+      }
+      statusEl.textContent = `Foram encontrados ${filmes.length} filme(s).`;
+      filmes.forEach((f) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="avatar">${f.titulo?.charAt(0).toUpperCase() || "-"}</div>
+          <div class="detalhes">
+            <strong>${f.titulo}</strong>
+            <span>${f.diretor}</span><br>
+            <small>Gênero: ${f.genero} &nbsp;&nbsp; Ano: ${f.anoLancamento} &nbsp;&nbsp; Avaliação: ${f.avaliacao}</small>
+          </div>
+          <div class="acoes">
+            <button class="btn-acao btn-editar" onclick="editarFilme(${f.id})">Editar</button>
+            <button class="btn-acao btn-excluir" onclick="deletarFilme(${f.id})">Excluir</button>
+          </div>`;
+        filmesEl.appendChild(card);
+      });
+    }
 
+    searchBtn.onclick = () => filtrarFilmes();
+    searchInput.onkeypress = (e) => { if (e.key === "Enter") filtrarFilmes(); };
+    clearSearch.onclick = () => { searchInput.value = ""; renderizarFilmes(filmesCache); };
+
+    function filtrarFilmes() {
+      const termo = searchInput.value.trim().toLowerCase();
+      if (!termo) { renderizarFilmes(filmesCache); return; }
+      const filtrados = filmesCache.filter(f =>
+        f.titulo.toLowerCase().includes(termo) || f.genero.toLowerCase().includes(termo)
+      );
+      renderizarFilmes(filtrados);
+    }
+
+    openModal.onclick = () => { modal.style.display = "flex"; modalTitulo.textContent = "Adicionar Novo Filme"; editandoId = null; clearCampos(); };
     closeModal.onclick = () => (modal.style.display = "none");
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
     clearFields.onclick = clearCampos;
+
     function clearCampos() {
       document.getElementById("titulo").value = "";
       document.getElementById("diretor").value = "";
@@ -303,16 +353,13 @@ input[type=number] { -moz-appearance: textfield; }
     async function editarFilme(id) {
       const res = await fetch(`/filmes/${id}`);
       const filme = await res.json();
-
       editandoId = id;
       modalTitulo.textContent = "Editar Filme";
-
       document.getElementById("titulo").value = filme.titulo;
       document.getElementById("diretor").value = filme.diretor;
       document.getElementById("genero").value = filme.genero;
       document.getElementById("anoLancamento").value = filme.anoLancamento;
       document.getElementById("avaliacao").value = filme.avaliacao;
-
       modal.style.display = "flex";
     }
 
@@ -329,41 +376,22 @@ input[type=number] { -moz-appearance: textfield; }
       const genero = document.getElementById("genero").value.trim();
       const anoLancamento = document.getElementById("anoLancamento").value.trim();
       const avaliacao = document.getElementById("avaliacao").value.trim();
-
       if (!titulo || !diretor || !genero || !anoLancamento || !avaliacao) {
         alert("Por favor, preencha todos os campos!");
         return;
       }
-
-      const filmesExistentes = await carregarFilmes();
-      const duplicado = filmesExistentes.some(
-        (f) => f.titulo.toLowerCase() === titulo.toLowerCase() && f.id !== editandoId
-      );
+      const duplicado = filmesCache.some(f => f.titulo.toLowerCase() === titulo.toLowerCase() && f.id !== editandoId);
       if (duplicado) {
         alert("Já existe um filme com esse título!");
         return;
       }
-
       const filme = { titulo, diretor, genero, anoLancamento: parseInt(anoLancamento), avaliacao: parseFloat(avaliacao) };
-
       try {
         const metodo = editandoId ? "PUT" : "POST";
         const url = editandoId ? `/filmes/${editandoId}` : "/filmes";
-        const res = await fetch(url, {
-          method: metodo,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(filme),
-        });
-
-        if (res.ok) {
-          modal.style.display = "none";
-          await carregarFilmes();
-        } else {
-          alert("Erro ao salvar filme.");
-        }
-      } catch {
-        alert("Erro na conexão com o servidor.");
-      }
+        const res = await fetch(url, { method: metodo, headers: { "Content-Type": "application/json" }, body: JSON.stringify(filme) });
+        if (res.ok) { modal.style.display = "none"; await carregarFilmes(); } else alert("Erro ao salvar filme.");
+      } catch { alert("Erro na conexão com o servidor."); }
     };
 
     carregarFilmes();

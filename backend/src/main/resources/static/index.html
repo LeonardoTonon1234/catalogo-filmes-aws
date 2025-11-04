@@ -71,7 +71,7 @@ label {
   color: #fff;
 }
 
-.btn-search, .btn-clear, .btn-add {
+.btn-search, .btn-add {
   background: #fff;
   color: var(--vermelho);
   border: none;
@@ -81,8 +81,6 @@ label {
   font-weight: 600;
 }
 
-.btn-clear { background: #f4f4f4; color: #555; }
-.btn-clear:hover { background: #e2e2e2; }
 .btn-search:hover, .btn-add:hover { background: #f4f4f4; }
 
 main {
@@ -243,7 +241,6 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
         <option>Documentário</option>
       </select>
       <button class="btn-search" id="searchBtn">Buscar</button>
-      <button class="btn-clear" id="clearSearch">Limpar</button>
       <button class="btn-add" id="openModal">Adicionar Filme</button>
     </div>
   </header>
@@ -282,7 +279,6 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
     const statusEl = document.getElementById("status");
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
-    const clearSearch = document.getElementById("clearSearch");
     const genreSelect = document.getElementById("genreSelect");
     const modal = document.getElementById("modal");
     const openModal = document.getElementById("openModal");
@@ -326,7 +322,7 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
       });
     }
 
-    // ✅ AGORA ACEITA FILMES COM MÚLTIPLOS GÊNEROS
+    // ✅ Filtro por nome e gênero (com múltiplos gêneros)
     function filtrarFilmes() {
       const termo = searchInput.value.trim().toLowerCase();
       const genero = genreSelect.value.trim().toLowerCase();
@@ -342,7 +338,6 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
     searchBtn.onclick = filtrarFilmes;
     genreSelect.onchange = filtrarFilmes;
     searchInput.onkeypress = (e) => { if (e.key === "Enter") filtrarFilmes(); };
-    clearSearch.onclick = () => { searchInput.value = ""; genreSelect.value = ""; renderizarFilmes(filmesCache); };
 
     openModal.onclick = () => { modal.style.display = "flex"; editandoId = null; clearCampos(); };
     closeModal.onclick = () => (modal.style.display = "none");
@@ -368,10 +363,13 @@ footer p { margin: 0; font-size: 14px; line-height: 1.6; }
       modal.style.display = "flex";
     }
 
+    // ✅ Atualizado para limpar campos de busca automaticamente após excluir
     async function deletarFilme(id) {
       if (confirm("Tem certeza que deseja excluir este filme?")) {
         await fetch(`/filmes/${id}`, { method: "DELETE" });
         await carregarFilmes();
+        searchInput.value = "";
+        genreSelect.value = "";
       }
     }
 

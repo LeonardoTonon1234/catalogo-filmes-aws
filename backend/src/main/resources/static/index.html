@@ -13,216 +13,192 @@
       --borda: #ddd;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
-      background: var(--fundo);
-      color: var(--texto);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+body {
+  margin: 0;
+  font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+  background: var(--fundo);
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-    header {
-      background: var(--vermelho);
-      color: #fff;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
+header {
+  background: var(--vermelho);
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 20px;
-    }
+header h1 { margin: 0; font-size: 20px; }
 
-    .btn-add {
-      background: #fff;
-      color: var(--vermelho);
-      border: none;
-      border-radius: 6px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+.btn-add {
+  background: #fff;
+  color: var(--vermelho);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-    .btn-add:hover {
-      background: #f4f4f4;
-    }
+.btn-add:hover { background: #f4f4f4; }
 
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 24px;
-    }
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
 
-    .status {
-      color: #555;
-      margin-bottom: 20px;
-    }
+.status { color: #555; margin-bottom: 20px; }
 
-    .filmes {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      width: 100%;
-      max-width: 700px;
-    }
+.filmes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+}
 
-    .card {
-      display: flex;
-      align-items: center;
-      background: #fff;
-      border: 1px solid var(--borda);
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      justify-content: space-between;
-      padding-right: 12px;
-    }
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding-right: 10px;
+}
 
-    .avatar {
-      background: var(--vermelho);
-      color: #fff;
-      font-weight: bold;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 60px;
-      height: 60px;
-    }
+.avatar {
+  background: var(--vermelho);
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
 
-    .detalhes {
-      padding: 10px 16px;
-      flex: 1;
-    }
+.detalhes {
+  padding: 10px 16px;
+  flex: 1;
+}
 
-    .detalhes strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
+.detalhes strong { display: block; font-size: 15px; margin-bottom: 4px; }
 
-    .btn-delete {
-      background: #ff4d4d;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s ease;
-    }
+.acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-    .btn-delete:hover {
-      background: #cc0000;
-    }
+.btn-acao {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+}
 
-    footer {
-      background: var(--vermelho-escuro);
-      color: #fff;
-      text-align: center;
-      padding: 16px;
-      margin-top: auto;
-    }
+.btn-editar { background: #1976d2; }
+.btn-editar:hover { background: #125ca2; }
+.btn-excluir { background: #d32f2f; }
+.btn-excluir:hover { background: #9a1f1f; }
 
-    footer h4 {
-      margin: 0 0 8px;
-    }
+footer {
+  background: var(--vermelho-escuro);
+  color: #fff;
+  text-align: center;
+  padding: 16px;
+  margin-top: auto;
+}
 
-    footer p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+footer h4 { margin: 0 0 8px; }
+footer p { margin: 0; font-size: 14px; line-height: 1.6; }
 
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
 
-    .modal-content {
-      background: #fff;
-      padding: 24px;
-      border-radius: 10px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
+.modal-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
 
-    .modal-content input {
-      width: 100%;
-      margin: 8px 0;
-      padding: 10px;
-      border: 1px solid var(--borda);
-      border-radius: 6px;
-    }
+.modal-content input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+}
 
-    /* remove setas do campo numérico */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type=number] {
-      appearance: textfield;
-    }
+/* Remove setas do campo numérico */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
 
-    .modal-buttons {
-      margin-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-    }
+.modal-buttons {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
 
-    .btn-cancel {
-      background: #ccc;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-    .btn-save {
-      background: var(--vermelho);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+.btn-save {
+  background: var(--vermelho);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
 
-    .btn-clear {
-      background: #f4f4f4;
-      border: 1px solid #aaa;
-      border-radius: 6px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .btn-save:hover {
-      background: var(--vermelho-escuro);
-    }
+.btn-clear {
+  background: #f4f4f4;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
   </style>
 </head>
 <body>
@@ -247,7 +223,7 @@
 
   <div class="modal" id="modal">
     <div class="modal-content">
-      <h3>Adicionar Novo Filme</h3>
+      <h3 id="modalTitulo">Adicionar Novo Filme</h3>
       <input id="titulo" type="text" placeholder="Título" required />
       <input id="diretor" type="text" placeholder="Diretor" required />
       <input id="genero" type="text" placeholder="Gênero" required />
@@ -264,6 +240,14 @@
   <script>
     const filmesEl = document.getElementById("filmes");
     const statusEl = document.getElementById("status");
+    const modal = document.getElementById("modal");
+    const openModal = document.getElementById("openModal");
+    const closeModal = document.getElementById("closeModal");
+    const saveFilme = document.getElementById("saveFilme");
+    const clearFields = document.getElementById("clearFields");
+    const modalTitulo = document.getElementById("modalTitulo");
+
+    let editandoId = null;
 
     async function carregarFilmes() {
       try {
@@ -279,15 +263,14 @@
           card.innerHTML = `
             <div class="avatar">${f.titulo?.charAt(0).toUpperCase() || "-"}</div>
             <div class="detalhes">
-              <strong>${f.titulo || "Sem título"}</strong>
-              <span>${f.diretor || "Diretor desconhecido"}</span><br>
-              <small>
-                Gênero: ${f.genero || "-"} &nbsp;&nbsp;
-                Ano: ${f.anoLancamento || "-"} &nbsp;&nbsp;
-                Avaliação: ${f.avaliacao || "-"}
-              </small>
+              <strong>${f.titulo}</strong>
+              <span>${f.diretor}</span><br>
+              <small>Gênero: ${f.genero} &nbsp;&nbsp; Ano: ${f.anoLancamento} &nbsp;&nbsp; Avaliação: ${f.avaliacao}</small>
             </div>
-            <button class="btn-delete" onclick="deletarFilme(${f.id})">Excluir</button>
+            <div class="acoes">
+              <button class="btn-acao btn-editar" onclick="editarFilme(${f.id})">Editar</button>
+              <button class="btn-acao btn-excluir" onclick="deletarFilme(${f.id})">Excluir</button>
+            </div>
           `;
           filmesEl.appendChild(card);
         });
@@ -298,38 +281,47 @@
       }
     }
 
-    async function deletarFilme(id) {
-      if (!confirm("Tem certeza que deseja excluir este filme?")) return;
+    openModal.onclick = () => {
+      modal.style.display = "flex";
+      modalTitulo.textContent = "Adicionar Novo Filme";
+      editandoId = null;
+      clearCampos();
+    };
 
-      try {
-        const res = await fetch(`/filmes/${id}`, { method: "DELETE" });
-        if (res.ok) {
-          await carregarFilmes();
-        } else {
-          alert("Erro ao deletar o filme.");
-        }
-      } catch {
-        alert("Erro na conexão com o servidor.");
-      }
-    }
-
-    const modal = document.getElementById("modal");
-    const openModal = document.getElementById("openModal");
-    const closeModal = document.getElementById("closeModal");
-    const saveFilme = document.getElementById("saveFilme");
-    const clearFields = document.getElementById("clearFields");
-
-    openModal.onclick = () => (modal.style.display = "flex");
     closeModal.onclick = () => (modal.style.display = "none");
     window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
 
-    clearFields.onclick = () => {
+    clearFields.onclick = clearCampos;
+    function clearCampos() {
       document.getElementById("titulo").value = "";
       document.getElementById("diretor").value = "";
       document.getElementById("genero").value = "";
       document.getElementById("anoLancamento").value = "";
       document.getElementById("avaliacao").value = "";
-    };
+    }
+
+    async function editarFilme(id) {
+      const res = await fetch(`/filmes/${id}`);
+      const filme = await res.json();
+
+      editandoId = id;
+      modalTitulo.textContent = "Editar Filme";
+
+      document.getElementById("titulo").value = filme.titulo;
+      document.getElementById("diretor").value = filme.diretor;
+      document.getElementById("genero").value = filme.genero;
+      document.getElementById("anoLancamento").value = filme.anoLancamento;
+      document.getElementById("avaliacao").value = filme.avaliacao;
+
+      modal.style.display = "flex";
+    }
+
+    async function deletarFilme(id) {
+      if (confirm("Tem certeza que deseja excluir este filme?")) {
+        await fetch(`/filmes/${id}`, { method: "DELETE" });
+        await carregarFilmes();
+      }
+    }
 
     saveFilme.onclick = async () => {
       const titulo = document.getElementById("titulo").value.trim();
@@ -339,28 +331,26 @@
       const avaliacao = document.getElementById("avaliacao").value.trim();
 
       if (!titulo || !diretor || !genero || !anoLancamento || !avaliacao) {
-        alert("Por favor, preencha todos os campos antes de salvar!");
+        alert("Por favor, preencha todos os campos!");
         return;
       }
 
       const filmesExistentes = await carregarFilmes();
-      const duplicado = filmesExistentes.some(f => f.titulo.toLowerCase() === titulo.toLowerCase());
+      const duplicado = filmesExistentes.some(
+        (f) => f.titulo.toLowerCase() === titulo.toLowerCase() && f.id !== editandoId
+      );
       if (duplicado) {
-        alert("Esse filme já está cadastrado!");
+        alert("Já existe um filme com esse título!");
         return;
       }
 
-      const filme = {
-        titulo,
-        diretor,
-        genero,
-        anoLancamento: parseInt(anoLancamento),
-        avaliacao: parseFloat(avaliacao)
-      };
+      const filme = { titulo, diretor, genero, anoLancamento: parseInt(anoLancamento), avaliacao: parseFloat(avaliacao) };
 
       try {
-        const res = await fetch("/filmes", {
-          method: "POST",
+        const metodo = editandoId ? "PUT" : "POST";
+        const url = editandoId ? `/filmes/${editandoId}` : "/filmes";
+        const res = await fetch(url, {
+          method: metodo,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(filme),
         });
@@ -369,7 +359,7 @@
           modal.style.display = "none";
           await carregarFilmes();
         } else {
-          alert("Erro ao adicionar filme.");
+          alert("Erro ao salvar filme.");
         }
       } catch {
         alert("Erro na conexão com o servidor.");

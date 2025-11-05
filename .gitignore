@@ -1,7 +1,11 @@
-# Compiled class file
+# =========================
+# ARQUIVOS JAVA/SPRING
+# =========================
+
+# Compiled class files
 *.class
 
-# Log file
+# Log files
 *.log
 
 # BlueJ files
@@ -10,7 +14,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Pacotes / Arquivos binários
 *.jar
 *.war
 *.nar
@@ -19,6 +23,40 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# =========================
+# GRADLE / MAVEN / CACHE
+# =========================
+
+.gradle/
+build/
+bin/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =========================
+# IDEs E AMBIENTES
+# =========================
+
+# VSCode
+.vscode/
+.settings/
+.idea/
+*.iml
+
+# SO / Sistema
+.DS_Store
+Thumbs.db
+
+# =========================
+# LOGS E ARQUIVOS TEMP
+# =========================
+
 hs_err_pid*
 replay_pid*
+
+# =========================
+# OUTROS
+# =========================
+
+# Arquivos de backup
+*~

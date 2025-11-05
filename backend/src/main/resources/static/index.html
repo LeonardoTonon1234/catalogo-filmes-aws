@@ -12,9 +12,7 @@
       --texto: #222;
       --borda: #ddd;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
@@ -24,7 +22,6 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
     header {
       background: var(--vermelho);
       color: #fff;
@@ -36,21 +33,18 @@
       flex-wrap: wrap;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-
     header h1 {
       font-size: 18px;
       margin: 0;
       flex: 1;
       white-space: nowrap;
     }
-
     .header-right {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
       gap: 8px;
     }
-
     #searchInput, #genreSelect {
       padding: 8px 10px;
       border-radius: 6px;
@@ -58,19 +52,16 @@
       outline: none;
       font-size: 14px;
     }
-
     #genreSelect {
       background: #fff;
       color: var(--vermelho);
       font-weight: 600;
     }
-
     label {
       font-weight: bold;
       margin-right: 4px;
       color: #fff;
     }
-
     .btn-search, .btn-add {
       background: #fff;
       color: var(--vermelho);
@@ -80,9 +71,7 @@
       cursor: pointer;
       font-weight: 600;
     }
-
     .btn-search:hover, .btn-add:hover { background: #f4f4f4; }
-
     main {
       flex: 1;
       display: flex;
@@ -90,9 +79,7 @@
       align-items: center;
       padding: 24px;
     }
-
     .status { color: #555; margin-bottom: 20px; }
-
     .filmes {
       display: flex;
       flex-direction: column;
@@ -100,7 +87,6 @@
       width: 100%;
       max-width: 700px;
     }
-
     .card {
       display: flex;
       align-items: center;
@@ -112,7 +98,6 @@
       overflow: hidden;
       padding-right: 10px;
     }
-
     .avatar {
       background: var(--vermelho);
       color: #fff;
@@ -124,20 +109,16 @@
       width: 60px;
       height: 60px;
     }
-
     .detalhes {
       padding: 10px 16px;
       flex: 1;
     }
-
     .detalhes strong { display: block; font-size: 15px; margin-bottom: 4px; }
-
     .acoes {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-
     .btn-acao {
       border: none;
       border-radius: 6px;
@@ -146,12 +127,10 @@
       font-weight: 600;
       color: #fff;
     }
-
     .btn-editar { background: #1976d2; }
     .btn-editar:hover { background: #125ca2; }
     .btn-excluir { background: #d32f2f; }
     .btn-excluir:hover { background: #9a1f1f; }
-
     footer {
       background: var(--vermelho-escuro);
       color: #fff;
@@ -159,10 +138,8 @@
       padding: 16px;
       margin-top: auto;
     }
-
     footer h4 { margin: 0 0 8px; }
     footer p { margin: 0; font-size: 14px; line-height: 1.6; }
-
     .modal {
       display: none;
       position: fixed;
@@ -173,7 +150,6 @@
       justify-content: center;
       z-index: 100;
     }
-
     .modal-content {
       background: #fff;
       padding: 24px;
@@ -182,7 +158,6 @@
       max-width: 400px;
       text-align: center;
     }
-
     .modal-content input {
       width: 100%;
       margin: 8px 0;
@@ -190,14 +165,12 @@
       border: 1px solid var(--borda);
       border-radius: 6px;
     }
-
     .modal-buttons {
       margin-top: 12px;
       display: flex;
       justify-content: space-between;
       gap: 8px;
     }
-
     .btn-cancel {
       background: #ccc;
       border: none;
@@ -206,7 +179,6 @@
       cursor: pointer;
       font-weight: 600;
     }
-
     .btn-save {
       background: var(--vermelho);
       color: #fff;
@@ -275,6 +247,9 @@
   </div>
 
   <script>
+    // ✅ Endpoint da API Gateway
+    const API_URL = "https://7itkaw7gz0.execute-api.us-east-1.amazonaws.com/prod";
+
     const filmesEl = document.getElementById("filmes");
     const statusEl = document.getElementById("status");
     const searchInput = document.getElementById("searchInput");
@@ -289,7 +264,7 @@
 
     async function carregarFilmes() {
       try {
-        const res = await fetch("/filmes");
+        const res = await fetch(`${API_URL}/filmes`);
         filmesCache = await res.json();
         renderizarFilmes(filmesCache);
       } catch {
@@ -337,14 +312,10 @@
     searchBtn.onclick = filtrarFilmes;
     genreSelect.onchange = filtrarFilmes;
 
-    
     searchInput.addEventListener("input", () => {
       const termo = searchInput.value.trim();
-      if (termo === "") {
-        carregarFilmes(); // mostra todos os filmes
-      } else {
-        filtrarFilmes();
-      }
+      if (termo === "") carregarFilmes();
+      else filtrarFilmes();
     });
 
     searchInput.addEventListener("keypress", (e) => {
@@ -364,7 +335,7 @@
     }
 
     async function editarFilme(id) {
-      const res = await fetch(`/filmes/${id}`);
+      const res = await fetch(`${API_URL}/filmes/${id}`);
       const filme = await res.json();
       editandoId = id;
       document.getElementById("titulo").value = filme.titulo;
@@ -377,7 +348,7 @@
 
     async function deletarFilme(id) {
       if (confirm("Tem certeza que deseja excluir este filme?")) {
-        await fetch(`/filmes/${id}`, { method: "DELETE" });
+        await fetch(`${API_URL}/filmes/${id}`, { method: "DELETE" });
         await carregarFilmes();
         searchInput.value = "";
         genreSelect.value = "";
@@ -401,7 +372,7 @@
       }
       const filme = { titulo, diretor, genero, anoLancamento: parseInt(anoLancamento), avaliacao: parseFloat(avaliacao) };
       const metodo = editandoId ? "PUT" : "POST";
-      const url = editandoId ? `/filmes/${editandoId}` : "/filmes";
+      const url = editandoId ? `${API_URL}/filmes/${editandoId}` : `${API_URL}/filmes`;
       const res = await fetch(url, { method: metodo, headers: { "Content-Type": "application/json" }, body: JSON.stringify(filme) });
       if (res.ok) { modal.style.display = "none"; await carregarFilmes(); } else alert("Erro ao salvar filme.");
     };

@@ -5,7 +5,7 @@ COPY . .
 RUN ./gradlew clean build -x test
 
 # Etapa 2: imagem final mais leve com apenas o .jar
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=builder /app/build/libs/demo-0.0.1-SNAPSHOT.jar app.jar
 
